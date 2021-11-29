@@ -40,15 +40,20 @@ class DataflowConstraints {
 
 
 class Variable {
-    constructor(value = null, eval, valid, dependencies) {
+    constructor(value, equation, valid, dependencies) {
         this.value = value
-        this.eval = eval
+        this.equation = equation
         this.valid = valid
         this.dependencies = dependencies
     }
 
+    //takes a 
+    parse_equation(equation) {
+    }
+
     eval() {
-        return this.eval
+        return this.equation
     }
 }
 
+module.exports = { DataflowConstraints, Variable };

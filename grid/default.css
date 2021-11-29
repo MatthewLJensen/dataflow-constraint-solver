@@ -1,0 +1,75 @@
+.simple-data-table th {
+    border: none;
+    background-color: #d7d7d7;
+    padding: 0;
+}
+
+.simple-data-table td {
+    border: none;
+    padding: 0;
+}
+
+.simple-data-table input {
+    border: 1px solid #d7d7d7;
+    display: inline-block;
+    padding: 5px;
+}
+
+.simple-data-table input:focus {
+    border: 1px solid #3498db;
+}
+
+.simple-data-table button.remove-row {
+    background: transparent;
+    color: #de5b49;
+    border: 1px solid #de5b49;
+    border-radius: 2px;
+    cursor: pointer;
+    margin: 2px;
+    font-size: 15px;
+    padding: 0;
+    height: 25px;
+    width: 25px;
+}
+
+.simple-data-table button.remove-row:hover {
+    background: #de5b49;
+    color: #fff;
+}
+
+.simple-data-table button.remove-row:focus {
+    background: #de5b49;
+    color: #fff;
+    outline: none;
+}
+
+.simple-data-table button.remove-row::-moz-focus-inner {
+    border: 0;
+}
+
+.simple-data-table button.add-row {
+    background: transparent;
+    color: #324d5c;
+    border: 1px solid #324d5c;
+    border-radius: 2px;
+    cursor: pointer;
+    margin: 2px;
+    font-size: 15px;
+    height: 25px;
+    padding: 0 6px;
+}
+
+.simple-data-table button.add-row:hover {
+    background: #324d5c;
+    color: #fff;
+}
+
+.simple-data-table button.add-row:focus {
+    background: #324d5c;
+    color: #fff;
+    outline: none;
+}
+
+.simple-data-table button.add-row::-moz-focus-inner {
+    border: 0;
+}
