@@ -1,69 +1,100 @@
-//const DFCS = require('./constraint_solver')
-// const express = require('express')
-// const path = require('path');
-
-// global.document = new JSDOM(html).window.document;
-
-// const app = express()
-// const port = 3000
-
-// app.get('/', function(req, res) {
-//     res.sendFile(path.join(__dirname, '/index.html'));
-//   });
-//import { DataflowConstraints, Variable } from './constraint_solver';
-
-//let a = new DFCS.Variable(5, 5, true, {})
-//let b = new DFCS.Variable(0, 5, true, {})
-//let c = new DFCS.Variable(0, 5, true, {})
-//let d = new DFCS.Variable(0, 5, true, {a,b,c})
-
-enteringFormula = false
+var enteringFormula = false
+var targetCell = null
+var variables = {}
+var ConstraintSolver = null
 
 
 
-function initializeInputs() {
-  var myButtons = document.getElementsByTagName('input')
-  for (i = 0; i < myButtons.length; ++i) {
-    myButtons[i].addEventListener('click', function (e) {
-      console.log(this.id)
-    })
-    myButtons[i].addEventListener('keyup', function (e) {
-      console.log(this.value)
-      console.log("keypress")
-      if (this.value == '=') {
-        enteringFormula = true
-      } else {
-        enteringFormula = false
+function initialize() {
+
+
+  let inputs = document.getElementsByTagName('input')
+  for (i = 0; i < inputs.length; ++i) {
+
+    // create a variable for each cell and store it in a dictionary
+    let cell = new Variable(null, null, true, [])
+    variables[inputs[i].id] = cell
+
+
+
+    // event listener for mouse click in cell
+    inputs[i].addEventListener('click', function (e) {
+      if (enteringFormula && targetCell != null) {
+        let inputCell = this.id
+        targetCell.value += inputCell
+
+        targetCell.focus()
       }
     })
+
+    // event listener for keyup (typing) in cell
+    inputs[i].addEventListener('keyup', function (e) {
+      if (this.value.charAt(0) == '=') {
+        enteringFormula = true
+        targetCell = this
+      } else {
+        enteringFormula = false
+        targetCell = nulll
+      }
+    })
+
+    // event listener for blur (focus lost) in cell
+    inputs[i].addEventListener('blur', function (e) {
+      if (!enteringFormula) { // TODO: handle empty cells. Tell when the cell is empty vs when it should display 0.
+        ConstraintSolver.set(variables[this.id], this.value)
+        reloadCells()
+      }
+    })
+
+    // event listener for focus (focus gained) in cell
+    inputs[i].addEventListener('focus', function (e) {
+      if (!enteringFormula) {
+        this.value = variables[this.id].equation
+      }
+    })
+
   }
+
+  // initialize the constraint solver with the variables
+  ConstraintSolver = new DataflowConstraints(variables)
+
+
+  // event listener for enter key
+  document.addEventListener("keydown", function (event) {
+    if (event.code == "Enter" || event.code == "NumpadEnter" || event.code == "Tab") {
+      enteringFormula = false
+      targetCell = null
+    }
+
+    if (event.code == "Enter" || event.code == "NumpadEnter") {
+      let currentCellID = document.activeElement.id
+      document.activeElement.blur()
+      let nextCell = document.getElementById(nextCellDown(currentCellID))
+      if (nextCell != null) {
+        nextCell.focus()
+      }
+    }
+  })
 }
-
-// function inputClicked() {
-//   if (enteringFormula) {
-//     console.log(this.id)
-//     console.log("click")
-//   }
-// }
-
-// function inputKeypress() {
-//   console.log(this.id)
-//   console.log("keypress")
-
-//   enteringFormula = true
-// }
-
-
 
 
 function reloadCells() {
   inputs = document.getElementsByTagName('input')
   for (let i = 0; i < inputs.length; i++) {
-    inputs[i].value = "test"
+    inputs[i].value = ConstraintSolver.get(variables[inputs[i].id])
   }
 }
 
-initializeInputs()
+function nextCellDown(currentCellID) {
+  return currentCellID.charAt(0) + (parseInt(currentCellID.substring(1)) + 1).toString()
+}
+
+function nextCellOver(currentCellID) {
+  return String.fromCharCode(currentCellID.charCodeAt(0) + 1) + currentCellID.substring(1)
+}
+
+
+initialize()
 //reloadCells()
 
 
