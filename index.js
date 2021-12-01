@@ -1,7 +1,6 @@
 var enteringFormula = false
 var targetCell = null
 var variables = {}
-var ConstraintSolver = null
 
 
 
@@ -12,7 +11,7 @@ function initialize() {
   for (i = 0; i < inputs.length; ++i) {
 
     // create a variable for each cell and store it in a dictionary
-    let cell = new Variable(null, null, true, [])
+    let cell = new DataflowConstraintVariable(null, null, true, [])
     variables[inputs[i].id] = cell
 
 
@@ -34,14 +33,14 @@ function initialize() {
         targetCell = this
       } else {
         enteringFormula = false
-        targetCell = nulll
+        targetCell = null
       }
     })
 
     // event listener for blur (focus lost) in cell
     inputs[i].addEventListener('blur', function (e) {
       if (!enteringFormula) { // TODO: handle empty cells. Tell when the cell is empty vs when it should display 0.
-        ConstraintSolver.set(variables[this.id], this.value)
+        variables[this.id].set(this.value)
         reloadCells()
       }
     })
@@ -54,9 +53,6 @@ function initialize() {
     })
 
   }
-
-  // initialize the constraint solver with the variables
-  ConstraintSolver = new DataflowConstraints(variables)
 
 
   // event listener for enter key
@@ -81,7 +77,7 @@ function initialize() {
 function reloadCells() {
   inputs = document.getElementsByTagName('input')
   for (let i = 0; i < inputs.length; i++) {
-    inputs[i].value = ConstraintSolver.get(variables[inputs[i].id])
+    inputs[i].value = variables[inputs[i].id].get()
   }
 }
 

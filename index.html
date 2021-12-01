@@ -1,40 +1,127 @@
 <html>
     <head>
         <title>Spreadsheet Constraints</title>
-
-        
-        <!-- <link rel="stylesheet" href="grid/default.css">
-        <script src="grid/index.js"></script> -->
-        <!--<script src="constraint_solver.js"></script>-->
-        <!-- <script type="module">
-            import { DataflowConstraints, Variable } from './constraint_solver.js'
-        </script> -->
+        <link rel="stylesheet" href="style.css">
 
     </head>
     <body>
 
         
-        <div id="example"></div>
+        <h1>
+            Constrained Spreadsheet
+        </h1>
         
-        <div id="row1">
-            <input type="text" id="A1" value="">
-            <input type="text" id="B1" value="">
-            <input type="text" id="C1" value="">
-        </div>
-        
-        <div id="row2">
-            <input type="text" id="A2" value="">
-            <input type="text" id="B2" value="">
-            <input type="text" id="C2" value="">
-        </div>
-        
-        <div id="row3">
-            <input type="text" id="A3" value="">
-            <input type="text" id="B3" value="">
-            <input type="text" id="C3" value="">
+        <div class="spreadsheet">
+
+            <!-- Table for spreadsheet -->
+            <table id="spreadsheet_table">
+                <tr>
+                    <th></th>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                    <th>D</th>
+                    <th>E</th>
+                    <th>F</th>
+                    <th>G</th>
+                    <th>H</th>
+
+                </tr>
+                <tr id = "row1">
+                    <td class = "row_header">1</td>
+                    <td><input type="text" id="A1" value=""></td>
+                    <td><input type="text" id="B1" value=""></td>
+                    <td><input type="text" id="C1" value=""></td>
+                    <td><input type="text" id="D1" value=""></td>
+                    <td><input type="text" id="E1" value=""></td>
+                    <td><input type="text" id="F1" value=""></td>
+                    <td><input type="text" id="G1" value=""></td>
+                    <td><input type="text" id="H1" value=""></td>
+                </tr>
+                <tr id = "row2">
+                    <td class = "row_header">2</td>
+                    <td><input type="text" id="A2" value=""></td>
+                    <td><input type="text" id="B2" value=""></td>
+                    <td><input type="text" id="C2" value=""></td>
+                    <td><input type="text" id="D2" value=""></td>
+                    <td><input type="text" id="E2" value=""></td>
+                    <td><input type="text" id="F2" value=""></td>
+                    <td><input type="text" id="G2" value=""></td>
+                    <td><input type="text" id="H2" value=""></td>
+
+                </tr>
+                <tr id = "row3">
+                    <td class = "row_header">3</td>
+                    <td><input type="text" id="A3" value=""></td>
+                    <td><input type="text" id="B3" value=""></td>
+                    <td><input type="text" id="C3" value=""></td>
+                    <td><input type="text" id="D3" value=""></td>
+                    <td><input type="text" id="E3" value=""></td>
+                    <td><input type="text" id="F3" value=""></td>
+                    <td><input type="text" id="G3" value=""></td>
+                    <td><input type="text" id="H3" value=""></td>
+                </tr>
+                <tr id = "row4">
+                    <td class = "row_header">4</td>
+                    <td><input type="text" id="A4" value=""></td>
+                    <td><input type="text" id="B4" value=""></td>
+                    <td><input type="text" id="C4" value=""></td>
+                    <td><input type="text" id="D4" value=""></td>
+                    <td><input type="text" id="E4" value=""></td>
+                    <td><input type="text" id="F4" value=""></td>
+                    <td><input type="text" id="G4" value=""></td>
+                    <td><input type="text" id="H4" value=""></td>
+                </tr>
+                <tr id = "row5">
+                    <td class = "row_header">5</td>
+                    <td><input type="text" id="A5" value=""></td>
+                    <td><input type="text" id="B5" value=""></td>
+                    <td><input type="text" id="C5" value=""></td>
+                    <td><input type="text" id="D5" value=""></td>
+                    <td><input type="text" id="E5" value=""></td>
+                    <td><input type="text" id="F5" value=""></td>
+                    <td><input type="text" id="G5" value=""></td>
+                    <td><input type="text" id="H5" value=""></td>
+                </tr>
+                <tr id = "row6">
+                    <td class = "row_header">6</td>
+                    <td><input type="text" id="A6" value=""></td>
+                    <td><input type="text" id="B6" value=""></td>
+                    <td><input type="text" id="C6" value=""></td>
+                    <td><input type="text" id="D6" value=""></td>
+                    <td><input type="text" id="E6" value=""></td>
+                    <td><input type="text" id="F6" value=""></td>
+                    <td><input type="text" id="G6" value=""></td>
+                    <td><input type="text" id="H6" value=""></td>
+                </tr>
+                <tr id = "row7">
+                    <td class = "row_header">7</td>
+                    <td><input type="text" id="A7" value=""></td>
+                    <td><input type="text" id="B7" value=""></td>
+                    <td><input type="text" id="C7" value=""></td>
+                    <td><input type="text" id="D7" value=""></td>
+                    <td><input type="text" id="E7" value=""></td>
+                    <td><input type="text" id="F7" value=""></td>
+                    <td><input type="text" id="G7" value=""></td>
+                    <td><input type="text" id="H7" value=""></td>
+                </tr>
+                <tr id = "row8">
+                    <td class = "row_header">8</td>
+                    <td><input type="text" id="A8" value=""></td>
+                    <td><input type="text" id="B8" value=""></td>
+                    <td><input type="text" id="C8" value=""></td>
+                    <td><input type="text" id="D8" value=""></td>
+                    <td><input type="text" id="E8" value=""></td>
+                    <td><input type="text" id="F8" value=""></td>
+                    <td><input type="text" id="G8" value=""></td>
+                    <td><input type="text" id="H8" value=""></td>
+                </tr>
+
+            </table>
         </div>
 
-        <script src = "constraint_solver.js"></script>
+        
+        <script src = "constraint-variable.1.0.0.js"></script>
         <script src ="index.js"></script>
     </body>
 </html>

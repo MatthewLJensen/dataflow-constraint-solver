@@ -1,11 +1,27 @@
-class DataflowConstraints {
-    constructor() {
+class DataflowConstraintVariable {
+    constructor(value, equation, valid, dependencies) {
+        this.value = value
+        this.equation = equation
+        this.valid = valid
+        this.dependencies = dependencies
         this.stack = []
     }
 
-    set(variable, value) {
-        variable.eval(value)
+    invalidate(variable) {
+        variable.valid = false
+        //console.log(this)
         for (let dependency of variable.dependencies) {
+            if (dependency.valid) {
+                variable.invalidate(dependency)
+            }
+        }
+        variable.dependencies = []
+    }
+
+    set(value) {
+        this.eval(value)
+        console.log(this)
+        for (let dependency of this.dependencies) {
             if (dependency.valid) {
                 console.log("test invalidate")
                 this.invalidate(dependency)
@@ -13,38 +29,19 @@ class DataflowConstraints {
         }
     }
 
-    invalidate(variable) {
-        variable.valid = false
-        for (let dependency of variable.dependencies) {
-            if (dependency.valid) {
-                this.invalidate(dependency)
-            }
-        }
-        variable.dependencies = []
-    }
-
-    get(variable) {
+    get() {
         if (this.stack.length > 0) {
-            variable.dependencies.push(this.stack[this.stack.length - 1])
+            this.dependencies.push(this.stack[this.stack.length - 1])
         }
 
-        if (!variable.valid) {
-            variable.valid = true
-            this.stack.push(variable)
-            variable.value = variable.eval(variable.equation)
+        if (!this.valid) {
+            this.valid = true
+            console.log("getting")
+            this.stack.push(this)
+            this.value = this.eval(this.equation)
             this.stack.pop()
         }
-        return variable.value
-    }
-}
-
-
-class Variable {
-    constructor(value, equation, valid, dependencies) {
-        this.value = value
-        this.equation = equation
-        this.valid = valid
-        this.dependencies = dependencies
+        return this.value
     }
 
     //takes a string of the form "=A1 + B1" or a number, and assigned it to the correct variable
@@ -85,7 +82,6 @@ class Variable {
         this.equation = equation
 
         let parsedEquation = this.parse_equation(this.equation)
-        //console.log(parsedEquation)
 
         if (parsedEquation != null) {
             let value = 0
@@ -112,5 +108,3 @@ class Variable {
         return this.value
     }
 }
-
-//module.exports = { DataflowConstraints, Variable };
