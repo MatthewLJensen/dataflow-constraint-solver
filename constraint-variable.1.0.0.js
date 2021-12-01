@@ -5,6 +5,7 @@ class DataflowConstraintVariable {
         this.valid = valid
         this.dependencies = dependencies
         this.stack = []
+        this.userSet = false
     }
 
     invalidate(variable) {
@@ -20,10 +21,8 @@ class DataflowConstraintVariable {
 
     set(value) {
         this.eval(value)
-        console.log(this)
         for (let dependency of this.dependencies) {
             if (dependency.valid) {
-                console.log("test invalidate")
                 this.invalidate(dependency)
             }
         }
@@ -36,7 +35,6 @@ class DataflowConstraintVariable {
 
         if (!this.valid) {
             this.valid = true
-            console.log("getting")
             this.stack.push(this)
             this.value = this.eval(this.equation)
             this.stack.pop()
@@ -45,66 +43,70 @@ class DataflowConstraintVariable {
     }
 
     //takes a string of the form "=A1 + B1" or a number, and assigned it to the correct variable
+    // should be changed to use this.equation, rather than taking it as a parameter
     parse_equation(equation) {
         let equationVariables = []
         let equationType = null
         let startIndex = 0
-        let value = 0
-        if (isNaN(equation)) {
-            equation = equation.substring(1)
 
-            for (let i = 0; i < equation.length; i++) {
+        equation = equation.substring(1)
 
-                if (equation[i] == '+' || equation[i] == '-' || equation[i] == '*' || equation[i] == '/') {
-                    equationVariables.push(equation.substring(startIndex, i))
-                    if (i != equation.length - 1) {
-                        equationType = equation[i]
-                        startIndex = i + 1
-                    }
-                } else if (i == equation.length - 1) {
-                    console.log("equation: " + equation)
-                    equationVariables.push(equation.substring(startIndex))
+        for (let i = 0; i < equation.length; i++) {
+
+            if (equation[i] == '+' || equation[i] == '-' || equation[i] == '*' || equation[i] == '/') {
+                equationVariables.push(equation.substring(startIndex, i))
+                if (i != equation.length - 1) {
+                    equationType = equation[i]
+                    startIndex = i + 1
                 }
+            } else if (i == equation.length - 1) {
+                equationVariables.push(equation.substring(startIndex))
             }
-
-            return { equationVariables, equationType }
-
-
-        } else {
-            this.value = Number(equation)
-            //console.log("equation: " + equation)
-            //console.log("value" + this.value)
-            return null
         }
+
+        return { equationVariables, equationType }
     }
 
     eval(equation) {
-        this.equation = equation
 
-        let parsedEquation = this.parse_equation(this.equation)
+        if (equation == "") {
+            this.equation = null
+            this.value = 0
+            this.userSet = false
+        } else {
 
-        if (parsedEquation != null) {
-            let value = 0
-            for (let variable of parsedEquation.equationVariables) {
-                console.log(variable)
-                //add dependencies
-                variables[variable].dependencies.push(this)
+            this.userSet = true
+            this.equation = equation
 
-                //calculate new value
-                if (parsedEquation.equationType == '+') {
-                    value += variables[variable].value
-                } else if (parsedEquation.equationType == '-') {
-                    value -= variables[variable].value
-                } else if (parsedEquation.equationType == '*') {
-                    value *= variables[variable].value
-                } else if (parsedEquation.equationType == '/') {
-                    value /= variables[variable].value
+            if (isNaN(this.equation)) {
+                let parsedEquation = this.parse_equation(this.equation)
+
+                if (parsedEquation != null) {
+                    let value = 0
+                    for (let variable of parsedEquation.equationVariables) {
+                        //add dependencies
+                        variables[variable].dependencies.push(this)
+
+                        //calculate new value
+                        if (parsedEquation.equationType == '+') {
+                            value += variables[variable].value
+                        } else if (parsedEquation.equationType == '-') {
+                            value -= variables[variable].value
+                        } else if (parsedEquation.equationType == '*') {
+                            value *= variables[variable].value
+                        } else if (parsedEquation.equationType == '/') {
+                            value /= variables[variable].value
+                        }
+                    }
+                    this.value = value
                 }
+            } else {
+                this.value = Number(equation)
+                this.userSet = true
             }
-            this.value = value
+
         }
 
-        console.log(this.value)
         return this.value
     }
 }

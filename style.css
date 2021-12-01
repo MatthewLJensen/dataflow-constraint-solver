@@ -3,6 +3,15 @@
     padding-right: 10px;
 }
 
+.highlighted_cell {
+    background-color: #FFFACD;
+}
+
+#equation_input_div{
+    padding: 5px;
+    margin: 5px;
+}
+
 /* centered div */
 /* .spreadsheet {
     display: flex;
