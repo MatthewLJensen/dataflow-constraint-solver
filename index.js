@@ -39,6 +39,14 @@ function initialize() {
       }
     })
 
+    inputs[i].addEventListener('keydown', function (e) {
+      if (e.key == 'F2') {
+        let equation_input = document.getElementById("equation_input")
+        this.value = equation_input.value
+        this.dispatchEvent(new Event('input'))
+      }
+    })
+
     // event listener for keydown (typing) in cell
     inputs[i].addEventListener('input', function (e) {
       // keep equation_input in sync with the normal input cell
@@ -47,21 +55,7 @@ function initialize() {
     })
 
 
-    // event listener for blur (focus lost) in cell
-    inputs[i].addEventListener('blur', function (e) {
 
-      if (isNaN(this.value)) {
-        removeCellHighlights()
-      }
-
-      if (!enteringFormula) { // TODO: handle empty cells. Tell when the cell is empty vs when it should display 0.
-        let equation_input = document.getElementById("equation_input")
-        variables[this.id].set(equation_input.value)
-        reloadCells()
-      }
-
-
-    })
 
     // event listener for focus (focus gained) in cell
     inputs[i].addEventListener('focus', function (e) {
@@ -74,12 +68,31 @@ function initialize() {
         }
         // if this is an equation, we want to highlight the cells that are being referenced
         if (isNaN(equation_input.value)) {
-          highlightFormulaCells(this.value)
+          highlightFormulaCells(equation_input.value)
         }
+
+        boldColumnAndRowHeaders(this.id)
 
       }
     })
 
+
+    // event listener for blur (focus lost) in cell
+    inputs[i].addEventListener('blur', function (e) {
+      let equation_input = document.getElementById("equation_input")
+
+      if (isNaN(equation_input.value)) {
+        removeCellHighlights()
+      }
+
+      if (!enteringFormula) { // TODO: handle empty cells. Tell when the cell is empty vs when it should display 0.
+        variables[this.id].set(equation_input.value)
+        reloadCells()
+      }
+
+      unBoldColumnAndRowHeaders(this.id)
+
+    })
   }
 
 
@@ -166,5 +179,24 @@ function removeCellHighlights() {
     input.classList.remove('highlighted_cell')
   }
 }
+
+
+
+// bold column and row headers
+function boldColumnAndRowHeaders(cellID) {
+  let columnHeader = document.getElementById(cellID.charAt(0))
+  let rowHeader = document.getElementById(cellID.substring(1))
+  columnHeader.classList.remove('column_header')
+  rowHeader.classList.add('selected_row')
+}
+
+function unBoldColumnAndRowHeaders(cellID) {
+  let columnHeader = document.getElementById(cellID.charAt(0))
+  let rowHeader = document.getElementById(cellID.substring(1))
+  columnHeader.classList.add('column_header')
+  rowHeader.classList.remove('selected_row')
+}
+
+
 
 initialize()

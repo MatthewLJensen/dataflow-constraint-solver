@@ -1,7 +1,15 @@
 .row_header {
-    font-weight: bold;
     padding-right: 10px;
 }
+.selected_row {
+    font-weight: bold;
+}
+
+.column_header {
+    font-weight: normal;
+}
+
+
 
 .highlighted_cell {
     background-color: #FFFACD;
