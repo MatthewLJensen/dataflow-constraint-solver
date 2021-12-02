@@ -1,7 +1,6 @@
 var enteringFormula = false
 //var typing = false
 var targetCell = null
-var variables = {}
 
 
 
@@ -136,8 +135,11 @@ function reloadCells() {
   inputs = document.getElementsByTagName('input')
   for (let i = 0; i < inputs.length; i++) {
     if (variables[inputs[i].id].userSet) {
+      console.log(inputs[i].id)
       inputs[i].value = variables[inputs[i].id].get()
+
     } else {
+      // if the variable has not been set by a user, its value is technically 0, but we don't want to display that.
       inputs[i].value = ""
     }
   }

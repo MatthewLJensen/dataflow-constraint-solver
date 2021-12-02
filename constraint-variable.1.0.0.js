@@ -1,10 +1,12 @@
+//global stack and dictionary for variables
+var stack = []
+var variables = {}
 class DataflowConstraintVariable {
     constructor(value, equation, valid, dependencies) {
         this.value = value
         this.equation = equation
         this.valid = valid
         this.dependencies = dependencies
-        this.stack = []
         this.userSet = false
     }
 
@@ -20,7 +22,7 @@ class DataflowConstraintVariable {
     }
 
     set(value) {
-        this.eval(value)
+        this.evaluate(value)
         for (let dependency of this.dependencies) {
             if (dependency.valid) {
                 this.invalidate(dependency)
@@ -29,15 +31,15 @@ class DataflowConstraintVariable {
     }
 
     get() {
-        if (this.stack.length > 0) {
-            this.dependencies.push(this.stack[this.stack.length - 1])
+        if (stack.length > 0) {
+            this.dependencies.push(stack[stack.length - 1])
         }
 
         if (!this.valid) {
             this.valid = true
-            this.stack.push(this)
-            this.value = this.eval(this.equation)
-            this.stack.pop()
+            stack.push(this)
+            this.value = this.evaluate(this.equation)
+            stack.pop()
         }
         return this.value
     }
@@ -48,6 +50,7 @@ class DataflowConstraintVariable {
         let equationVariables = []
         let equationType = null
         let startIndex = 0
+        let functionString = ""
 
         equation = equation.substring(1)
 
@@ -64,10 +67,31 @@ class DataflowConstraintVariable {
             }
         }
 
-        return { equationVariables, equationType }
+
+        // set dependencies
+        for (let variable of equationVariables) {
+            variables[variable].dependencies.push(this)
+        }
+
+        functionString += "(function() { return "
+        
+        for (let i = 0; i < equationVariables.length; i++) {
+            functionString += variables[equationVariables[i]].get()
+            if (i != equationVariables.length - 1) {
+                functionString += equationType
+            }
+        }
+
+        functionString += "; })"
+
+        console.log(functionString)
+
+        var fn = eval(functionString)
+
+        return fn
     }
 
-    eval(equation) {
+    evaluate(equation) {
 
         if (equation == "") {
             this.equation = null
@@ -79,27 +103,10 @@ class DataflowConstraintVariable {
             this.equation = equation
 
             if (isNaN(this.equation)) {
-                let parsedEquation = this.parse_equation(this.equation)
 
-                if (parsedEquation != null) {
-                    let value = 0
-                    for (let variable of parsedEquation.equationVariables) {
-                        //add dependencies
-                        variables[variable].dependencies.push(this)
+                let equationFunction = this.parse_equation(this.equation)
+                this.value = equationFunction()
 
-                        //calculate new value
-                        if (parsedEquation.equationType == '+') {
-                            value += variables[variable].value
-                        } else if (parsedEquation.equationType == '-') {
-                            value -= variables[variable].value
-                        } else if (parsedEquation.equationType == '*') {
-                            value *= variables[variable].value
-                        } else if (parsedEquation.equationType == '/') {
-                            value /= variables[variable].value
-                        }
-                    }
-                    this.value = value
-                }
             } else {
                 this.value = Number(equation)
                 this.userSet = true
