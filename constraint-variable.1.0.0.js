@@ -38,6 +38,7 @@ class DataflowConstraintVariable {
     }
 
 
+
     /**
     * Invalidates the variable and recursively invalidates all of its dependencies.
     * @param {DataflowConstraintVariable} variable The variable to invalidate.
@@ -60,6 +61,7 @@ class DataflowConstraintVariable {
         }
         variable.dependencies = []
     }
+
 
 
     /**
@@ -114,17 +116,17 @@ class DataflowConstraintVariable {
     
     /**
      * Takes a string of the form "=A1 + B1" or a number, and returns a function performing the strings stated operation.
-     * @method parse_equation
+     * @method parse
      * @return {function} A function performing the operation specified by the equation.
      * @memberof DataflowConstraintVariable
      * @instance
      * @example
      * var A1 = new DataflowConstraintVariable(2, "", true, [])
      * var B1 = new DataflowConstraintVariable(3, "", true, [])
-     * var variable = new DataflowConstraintVariable(0, "=A1 + B1", true, [])
-     * console.log(variable.parse_equation()) // ƒ () { return 2+3; }
+     * var variable = new DataflowConstraintVariable(0, "=A1+B1", true, [])
+     * console.log(variable.parse()) // ƒ () { return 2+3; }
      */ 
-    parse_equation() {
+    parse() {
         let equationVariables = []
         let equationType = null
         let startIndex = 0
@@ -150,6 +152,7 @@ class DataflowConstraintVariable {
             variables[variable].dependencies.push(this)
         }
 
+
         functionString += "(function() { return "
         
         for (let i = 0; i < equationVariables.length; i++) {
@@ -161,6 +164,7 @@ class DataflowConstraintVariable {
 
         functionString += "; })"
 
+
         var fn = eval(functionString)
 
         return fn
@@ -170,7 +174,7 @@ class DataflowConstraintVariable {
 
     /**
      * Evaluates the equation in the variable and returns the value of the variable.
-     * @param {string} equation A string of the form "=A1 + B1" or a number.
+     * @param {string} equation A string of the form "=A1+B1" or a number.
      * @return {number} The value of the variable.
      * @memberof DataflowConstraintVariable
      * @instance
@@ -178,8 +182,8 @@ class DataflowConstraintVariable {
      * @example
      * var A = new DataflowConstraintVariable(2, "", true, [])
      * var B = new DataflowConstraintVariable(3, "", true, [])
-     * var variable = new DataflowConstraintVariable(0, "=A1 + B1", true, [])
-     * console.log(variable.evaluate("=A1 + B1")) // 5
+     * var variable = new DataflowConstraintVariable(0, "=A1+B1", true, [])
+     * console.log(variable.evaluate("=A1+B1")) // 5
      */
     evaluate(equation) {
 
@@ -196,11 +200,8 @@ class DataflowConstraintVariable {
              * if the equation is not a number, parse the equation and set the value equal to the value of the equation
             */
             if (isNaN(this.equation)) {
-
-                let equationFunction = this.parse_equation()
+                let equationFunction = this.parse()
                 this.value = equationFunction()
-
-            
             }
             /**
              * if the equation is a number, set the value equal to the equation

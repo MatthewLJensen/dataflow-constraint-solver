@@ -12,7 +12,7 @@ var targetCell = null
 
 
 /**
- * Initializes a constraint variable for each cell in the spreadsheet. Adds event listeners to all cells for focus, blur, click, keyup, keydowm, and input
+ * Initializes a constraint variable for each cell in the spreadsheet. Adds event listeners to all cells for focus, blur, click, keyup, keydown, and input
  * @function initialize
  */
 
@@ -37,10 +37,10 @@ function initialize() {
         targetCell.focus()
       }
     })
+    
 
     // event listener for keyup (typing) in cell
     inputs[i].addEventListener('keyup', function (e) {
-
       if (this.value.charAt(0) == '=') {
         enteringFormula = true
         targetCell = this
@@ -51,19 +51,21 @@ function initialize() {
       }
     })
 
+
     inputs[i].addEventListener('keydown', function (e) {
       if (e.key == 'F2') {
-        let equation_input = document.getElementById("equation_input")
-        this.value = equation_input.value
+        let equationInput = document.getElementById("equationInput")
+        this.value = equationInput.value
         this.dispatchEvent(new Event('input'))
       }
     })
 
+
     // event listener for keydown (typing) in cell
     inputs[i].addEventListener('input', function (e) {
-      // keep equation_input in sync with the normal input cell
-      let equation_input = document.getElementById("equation_input")
-      equation_input.value = this.value
+      // keep equationInput in sync with the normal input cell
+      let equationInput = document.getElementById("equationInput")
+      equationInput.value = this.value
     })
 
 
@@ -72,15 +74,15 @@ function initialize() {
     // event listener for focus (focus gained) in cell
     inputs[i].addEventListener('focus', function (e) {
       if (!enteringFormula) {
-        let equation_input = document.getElementById("equation_input")
-        equation_input.value = variables[this.id].equation
+        let equationInput = document.getElementById("equationInput")
+        equationInput.value = variables[this.id].equation
 
         if (variables[this.id].userSet) {
           this.value = variables[this.id].value
         }
         // if this is an equation, we want to highlight the cells that are being referenced
-        if (isNaN(equation_input.value)) {
-          highlightFormulaCells(equation_input.value)
+        if (isNaN(equationInput.value)) {
+          highlightFormulaCells(equationInput.value)
         }
         boldColumnAndRowHeaders(this.id)
       }
@@ -89,14 +91,14 @@ function initialize() {
 
     // event listener for blur (focus lost) in cell
     inputs[i].addEventListener('blur', function (e) {
-      let equation_input = document.getElementById("equation_input")
+      let equationInput = document.getElementById("equationInput")
 
-      if (isNaN(equation_input.value)) {
+      if (isNaN(equationInput.value)) {
         removeCellHighlights()
       }
 
       if (!enteringFormula) { // TODO: handle empty cells. Tell when the cell is empty vs when it should display 0.
-        variables[this.id].set(equation_input.value)
+        variables[this.id].set(equationInput.value)
         reloadCells()
       }
 
@@ -106,7 +108,7 @@ function initialize() {
   }
 
 
-  // event listener for enter key
+  // event listener for enter keydown
   document.addEventListener("keydown", function (event) {
 
     // arrow keys based on event.code

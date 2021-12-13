@@ -17,7 +17,7 @@ This method takes an input, either a value or an unparsed formula and sets the v
 This implementation utilizes lazy evaluation. This means that the values of dependant variables are only updated when their get methods are called. Until this happens, they are simply marked as invalid to indicate they must be reevaluted before returning their value. This is in contrast to eager evaluation which immedietely updates dependant variables when an dependancy changes.
 
 ### Applications for Constraint Systems (from Dr. Halterman)
-1. Propagating information around in composite
+1. Propagating information around in composite objects
 2. Specifying graphical relationships (like how information is formatted on the screen)
 3. Maintain consistency between graphics and application data
 4. Maintain consistency among multiple views of data (textual view, bar graph, pie chart, etc.)
