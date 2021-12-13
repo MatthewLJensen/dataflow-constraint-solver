@@ -12,9 +12,10 @@ var targetCell = null
 
 
 /**
- * @function initialize
  * Initializes a constraint variable for each cell in the spreadsheet. Adds event listeners to all cells for focus, blur, click, keyup, keydowm, and input
+ * @function initialize
  */
+
 function initialize() {
 
 
@@ -142,8 +143,8 @@ function initialize() {
 
 
 /**
- * @function reloadCells
  * Gets the value of each "userSet" cell and updates the cell's value visually
+ * @function reloadCells
  */
 function reloadCells() {
   inputs = document.getElementsByTagName('input')
@@ -159,8 +160,8 @@ function reloadCells() {
 
 
 /**
- * @function nextCellDown
  * Returns the cell ID of the cell below the current cell
+ * @function nextCellDown
  * @param currentCellID the current cell ID
  * @returns {string} the cell ID of the cell below the current cell
  */
@@ -169,8 +170,8 @@ function nextCellDown(currentCellID) {
 }
 
 /**
- * @function nextCellUp
  * Returns the cell ID of the cell above the current cell
+ * @function nextCellUp
  * @param currentCellID the current cell ID
  * @returns {string} the cell ID of the cell below the current cell
  */
@@ -179,8 +180,8 @@ function nextCellUp(currentCellID) {
 }
 
 /**
- * @function nextCelRight
  * Returns the cell ID of the cell top the right of the current cell
+ * @function nextCelRight
  * @param currentCellID the current cell ID
  * @returns {string} the cell ID of the cell below the current cell
  */
@@ -189,8 +190,8 @@ function nextCellRight(currentCellID) {
 }
 
 /**
- * @function nextCellLeft
  * Returns the cell ID of the cell to the left of the current cell
+ * @function nextCellLeft
  * @param currentCellID the current cell ID
  * @returns {string} the cell ID of the cell below the current cell
  */
