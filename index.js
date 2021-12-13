@@ -6,7 +6,7 @@ var enteringFormula = false
 
 /**
  * Global variable for switching back to original cell when clicking on another cell while entering a formula
- * @type {opject}
+ * @type {object}
  */
 var targetCell = null
 
@@ -181,7 +181,7 @@ function nextCellUp(currentCellID) {
 
 /**
  * Returns the cell ID of the cell top the right of the current cell
- * @function nextCelRight
+ * @function nextCellRight
  * @param currentCellID the current cell ID
  * @returns {string} the cell ID of the cell below the current cell
  */
@@ -200,7 +200,11 @@ function nextCellLeft(currentCellID) {
 }
 
 
-// cell highlighting
+/**
+ * Uses regex to pull cell IDs from a formula and highlight them
+ * @function highlightFormulaCells
+ * @param {string} formula the formula to be highlighted
+ */
 function highlightFormulaCells(formula) {
   let formulaCells = formula.match(/[A-Z]+\d+/g)
   if (formulaCells != null) {
@@ -210,7 +214,10 @@ function highlightFormulaCells(formula) {
   }
 }
 
-// removes highlighting from all cells
+/**
+ * Removes the highlight from all cells
+ * @function removeCellHighlights
+ */
 function removeCellHighlights() {
   let inputs = document.getElementsByTagName('input')
   for (input of inputs) {
@@ -219,8 +226,11 @@ function removeCellHighlights() {
 }
 
 
-
-// bold column and row headers
+/**
+ * Makes the column and row headers bold for the selected cell
+ * @function boldColumnAndRowHeaders
+ * @param {string} cellID the ID of the selected cell
+ */
 function boldColumnAndRowHeaders(cellID) {
   let columnHeader = document.getElementById(cellID.charAt(0))
   let rowHeader = document.getElementById(cellID.substring(1))
@@ -228,6 +238,11 @@ function boldColumnAndRowHeaders(cellID) {
   rowHeader.classList.add('selected_row')
 }
 
+/**
+ * Unbold the column and row headers for the selected cell
+ * @function unBoldColumnAndRowHeaders
+ * @param {string} cellID 
+ */
 function unBoldColumnAndRowHeaders(cellID) {
   let columnHeader = document.getElementById(cellID.charAt(0))
   let rowHeader = document.getElementById(cellID.substring(1))
@@ -236,5 +251,5 @@ function unBoldColumnAndRowHeaders(cellID) {
 }
 
 
-
+// the lonely function call that does everything.
 initialize()

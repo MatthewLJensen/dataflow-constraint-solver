@@ -44,7 +44,43 @@
 
     <section>
         <article><h1>dataflow-constraint-solver</h1>
-<p>An application that will record dataflow constraints and maintain the value of an object based on its dependancies. This Constraint Solver API is specifically designed for a spreadsheet-type application.</p></article>
+<p>An application that will record dataflow constraints and maintain the value of an object based on its dependancies. This Constraint Solver API is specifically designed for a spreadsheet-type application.</p>
+<h2>Graphical Interface</h2>
+<p>The spreadsheet closely models an excel spreadsheet. Each cell has an ID corresponding to its column and row. Currently, the spreadsheet size is hardcoded to have A-&gt;H columns and 1-&gt;8 rows. Giving is an 8X8 grid consisting of 64 cells. Upon an initial load, the spreedsheet looks like the following image.
+<img src="https://user-images.githubusercontent.com/20911606/145886120-62946531-975e-495f-b180-9d7432a89c3a.png" alt="image"></p>
+<h2>Usage</h2>
+<p>How does a user interact with this application?</p>
+<h3>Navigating</h3>
+<p>Navigation between cells is similar to how navigation works within Excel.</p>
+<ol>
+<li>Arrow keys move between cells in the expected manner.</li>
+<li>Enter will submit a formula as well as move down a cell.</li>
+<li>Tab will submit a formula and move to the cell on the right.</li>
+</ol>
+<h3>Writing Formulas</h3>
+<ol>
+<li>To signify you are entering a formula, start by typing the equal sign character: &quot;=&quot;. This then enables you to click on other cells, which will automatically put the ID of the clicked cell into your formula and bring focus back to the cell receiving the formula.</li>
+<li>If you want to simply mirror the value in that cell, or if you're coming here from Step 5 with a finished formula, you can end here and simply press enter or tab.</li>
+<li>Type in the mathematical operator of your choice. Currently tested operators are +,-,*,/.</li>
+<li>Click another cell.</li>
+<li>Go to step 2.</li>
+</ol>
+<p>See this process in the GIF below:
+TO BE ADDED.</p>
+<p>You can also manually enter a formula by typing the IDs of the cell you wish to include in the formula.</p>
+<p>In order to edit a formula later, focus a cell with a formula and press F2 in order to copy the formula from the equation display. Then edit the formula within the cell according the the steps above.</p>
+<h3>FAQs</h3>
+<ol>
+<li>How are self referential formulas handled? Self references are allowed. They update every time another cell is changed, which triggers the application to get all of the values for each of the cells.</li>
+<li>Are there checks for improper input?</li>
+<li></li>
+</ol>
+<h2>Features</h2>
+<h3>QOL</h3>
+<ol>
+<li>Column and Row headers are bolded based on the currently selected cell</li>
+<li>Focusing a cell with a formula highlights the cells on which it depends. This currently only goes back 1 level.</li>
+</ol></article>
     </section>
 
 
@@ -55,13 +91,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DataflowConstraintVariable.html">DataflowConstraintVariable</a></li></ul><h3>Global</h3><ul><li><a href="global.html#enteringFormula">enteringFormula</a></li><li><a href="global.html#initializeInitializesaconstraintvariableforeachcellinthespreadsheet.Addseventlistenerstoallcellsforfocus,blur,click,keyup,keydowm,andinput">initializeInitializes a constraint variable for each cell in the spreadsheet. Adds event listeners to all cells for focus, blur, click, keyup, keydowm, and input</a></li><li><a href="global.html#nextCellDownReturnsthecellIDofthecellbelowthecurrentcell">nextCellDownReturns the cell ID of the cell below the current cell</a></li><li><a href="global.html#nextCellLeftReturnsthecellIDofthecelltotheleftofthecurrentcell">nextCellLeftReturns the cell ID of the cell to the left of the current cell</a></li><li><a href="global.html#nextCellUpReturnsthecellIDofthecellabovethecurrentcell">nextCellUpReturns the cell ID of the cell above the current cell</a></li><li><a href="global.html#nextCelRightReturnsthecellIDofthecelltoptherightofthecurrentcell">nextCelRightReturns the cell ID of the cell top the right of the current cell</a></li><li><a href="global.html#reloadCellsGetsthevalueofeach%2522userSet%2522cellandupdatesthecell'svaluevisually">reloadCellsGets the value of each "userSet" cell and updates the cell's value visually</a></li><li><a href="global.html#stack">stack</a></li><li><a href="global.html#targetCell">targetCell</a></li><li><a href="global.html#variables">variables</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DataflowConstraintVariable.html">DataflowConstraintVariable</a></li></ul><h3>Global</h3><ul><li><a href="global.html#boldColumnAndRowHeaders">boldColumnAndRowHeaders</a></li><li><a href="global.html#enteringFormula">enteringFormula</a></li><li><a href="global.html#highlightFormulaCells">highlightFormulaCells</a></li><li><a href="global.html#initialize">initialize</a></li><li><a href="global.html#nextCellDown">nextCellDown</a></li><li><a href="global.html#nextCellLeft">nextCellLeft</a></li><li><a href="global.html#nextCellRight">nextCellRight</a></li><li><a href="global.html#nextCellUp">nextCellUp</a></li><li><a href="global.html#reloadCells">reloadCells</a></li><li><a href="global.html#removeCellHighlights">removeCellHighlights</a></li><li><a href="global.html#stack">stack</a></li><li><a href="global.html#targetCell">targetCell</a></li><li><a href="global.html#unBoldColumnAndRowHeaders">unBoldColumnAndRowHeaders</a></li><li><a href="global.html#variables">variables</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Mon Dec 13 2021 12:55:42 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Mon Dec 13 2021 16:39:28 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
