@@ -15,11 +15,19 @@ var variables = {}
  */
 class DataflowConstraintVariable {
     /**
-     * 
-     * @param {number} value 
-     * @param {string} equation 
-     * @param {boolean} valid 
-     * @param {array} dependencies 
+     * @param {number} value A hard-coded value to set the variable to.
+     * @param {string} equation A string of the form "=A1 + B1" or a number.
+     * @param {boolean} valid A boolean indicating whether the variable is valid.
+     * @param {array} dependencies An array of DataflowConstraintVariable objects that depend on this variable.
+     * @memberof DataflowConstraintVariable
+     * @instance
+     * @method constructor
+     * @example
+     * var A1 = new DataflowConstraintVariable(2, "", true, [])
+     * console.log(A1.equation) // ""
+     * console.log(A1.value) // 2
+     * console.log(A1.valid) // true
+     * console.log(A1.dependencies) // []
      */
     constructor(value, equation, valid, dependencies) {
         this.value = value
@@ -29,10 +37,11 @@ class DataflowConstraintVariable {
         this.userSet = false
     }
 
+
     /**
     * Invalidates the variable and recursively invalidates all of its dependencies.
-    * @param {DataflowConstraintVariable} variable
-    * @return {void}
+    * @param {DataflowConstraintVariable} variable The variable to invalidate.
+    * @return {void} Nothing is returned from this method.
     * @memberof DataflowConstraintVariable
     * @instance
     * @method invalidate
@@ -52,10 +61,11 @@ class DataflowConstraintVariable {
         variable.dependencies = []
     }
 
+
     /**
      * Sets the value of the variable to a number or equation as well as invalidates all of its dependencies. 
-     * @param {number|string} value
-     * @return {void}
+     * @param {number|string} value A number or equation to set the variable to.
+     * @return {void} Nothing is returned from this method.
      * @memberof DataflowConstraintVariable
      * @instance
      */
@@ -68,11 +78,23 @@ class DataflowConstraintVariable {
         }
     }
 
+
+
     /**
-     * Gets the value of the variable. If it is not valid, it will evaluate the equation and update the value.
-     * @return {number} value
+     * Gets the value of the variable. If it is not valid, it will evaluate the equation and update the value while properly handling the dependency lists.
+     * @return {number} The value of the variable.
      * @memberof DataflowConstraintVariable
      * @instance
+     * @method get
+     * @example
+     * stack = []
+     * var A1 = new DataflowConstraintVariable(2, "", true, [])
+     * var B1 = new DataflowConstraintVariable(3, "", true, [])
+     * var variable = new DataflowConstraintVariable(0, "=A1 + B1", false, [])
+     * console.log(variable.get()) // 5
+     * console.log(A1.dependencies) // [variable]
+     * console.log(B1.dependencies) // [variable]
+     * console.log(variable.dependencies) // []
      */
     get() {
         if (stack.length > 0) {
@@ -88,12 +110,19 @@ class DataflowConstraintVariable {
         return this.value
     }
 
+
+    
     /**
      * Takes a string of the form "=A1 + B1" or a number, and returns a function performing the strings stated operation.
      * @method parse_equation
-     * @return {function}
+     * @return {function} A function performing the operation specified by the equation.
      * @memberof DataflowConstraintVariable
      * @instance
+     * @example
+     * var A1 = new DataflowConstraintVariable(2, "", true, [])
+     * var B1 = new DataflowConstraintVariable(3, "", true, [])
+     * var variable = new DataflowConstraintVariable(0, "=A1 + B1", true, [])
+     * console.log(variable.parse_equation()) // ƒ () { return 2+3; }
      */ 
     parse_equation() {
         let equationVariables = []
@@ -102,11 +131,11 @@ class DataflowConstraintVariable {
         let functionString = ""
         let equationString = this.equation.substring(1)
 
-        for (let i = 0; i < equation.length; i++) {
+        for (let i = 0; i < this.equation.length; i++) {
 
             if (equationString[i] == '+' || equationString[i] == '-' || equationString[i] == '*' || equationString[i] == '/') {
                 equationVariables.push(equationString.substring(startIndex, i))
-                if (i != equation.length - 1) {
+                if (i != this.equation.length - 1) {
                     equationType = equationString[i]
                     startIndex = i + 1
                 }
@@ -132,13 +161,26 @@ class DataflowConstraintVariable {
 
         functionString += "; })"
 
-        console.log(functionString)
-
         var fn = eval(functionString)
 
         return fn
     }
 
+
+
+    /**
+     * Evaluates the equation in the variable and returns the value of the variable.
+     * @param {string} equation A string of the form "=A1 + B1" or a number.
+     * @return {number} The value of the variable.
+     * @memberof DataflowConstraintVariable
+     * @instance
+     * @method evaluate
+     * @example
+     * var A = new DataflowConstraintVariable(2, "", true, [])
+     * var B = new DataflowConstraintVariable(3, "", true, [])
+     * var variable = new DataflowConstraintVariable(0, "=A1 + B1", true, [])
+     * console.log(variable.evaluate("=A1 + B1")) // 5
+     */
     evaluate(equation) {
 
         if (equation == "") {
@@ -150,18 +192,26 @@ class DataflowConstraintVariable {
             this.userSet = true
             this.equation = equation
 
+            /**
+             * if the equation is not a number, parse the equation and set the value equal to the value of the equation
+            */
             if (isNaN(this.equation)) {
 
                 let equationFunction = this.parse_equation()
                 this.value = equationFunction()
 
-            } else {
+            
+            }
+            /**
+             * if the equation is a number, set the value equal to the equation
+             */
+            else {
                 this.value = Number(equation)
                 this.userSet = true
             }
 
         }
-
         return this.value
     }
+
 }

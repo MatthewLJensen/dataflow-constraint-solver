@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>DataflowConstraintVariable<span class="signature">(value, equation, valid, dependencies)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>DataflowConstraintVariable<span class="signature">()</span><span class="type-signature"></span></h2>
         
             <div class="class-description">Class representing a variable involved in a system of constraint equations.</div>
         
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="DataflowConstraintVariable"><span class="type-signature"></span>new DataflowConstraintVariable<span class="signature">(value, equation, valid, dependencies)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="DataflowConstraintVariable"><span class="type-signature"></span>new DataflowConstraintVariable<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -58,124 +58,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>equation</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>valid</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>dependencies</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -267,6 +149,377 @@
     
 
     
+    <h4 class="name" id="constructor"><span class="type-signature"></span>constructor<span class="signature">(value, equation, valid, dependencies)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A hard-coded value to set the variable to.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>equation</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A string of the form "=A1 + B1" or a number.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>valid</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A boolean indicating whether the variable is valid.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>dependencies</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An array of DataflowConstraintVariable objects that depend on this variable.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="constraint-variable.1.0.0.js.html">constraint-variable.1.0.0.js</a>, <a href="constraint-variable.1.0.0.js.html#line17">line 17</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>var A1 = new DataflowConstraintVariable(2, "", true, [])console.log(A1.equation) // ""console.log(A1.value) // 2console.log(A1.valid) // trueconsole.log(A1.dependencies) // []</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="evaluate"><span class="type-signature"></span>evaluate<span class="signature">(equation)</span><span class="type-signature"> &rarr; {number}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Evaluates the equation in the variable and returns the value of the variable.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>equation</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A string of the form "=A1 + B1" or a number.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="constraint-variable.1.0.0.js.html">constraint-variable.1.0.0.js</a>, <a href="constraint-variable.1.0.0.js.html#line171">line 171</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The value of the variable.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>var A = new DataflowConstraintVariable(2, "", true, [])var B = new DataflowConstraintVariable(3, "", true, [])var variable = new DataflowConstraintVariable(0, "=A1 + B1", true, [])console.log(variable.evaluate("=A1 + B1")) // 5</code></pre>
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="get"><span class="type-signature"></span>get<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
     
 
@@ -275,7 +528,7 @@
 
 
 <div class="description">
-    Gets the value of the variable. If it is not valid, it will evaluate the equation and update the value.
+    Gets the value of the variable. If it is not valid, it will evaluate the equation and update the value while properly handling the dependency lists.
 </div>
 
 
@@ -319,7 +572,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="constraint-variable.1.0.0.js.html">constraint-variable.1.0.0.js</a>, <a href="constraint-variable.1.0.0.js.html#line77">line 77</a>
+        <a href="constraint-variable.1.0.0.js.html">constraint-variable.1.0.0.js</a>, <a href="constraint-variable.1.0.0.js.html#line83">line 83</a>
     </li></ul></dd>
     
 
@@ -348,7 +601,7 @@
 
         
 <div class="param-desc">
-    value
+    The value of the variable.
 </div>
 
 
@@ -368,6 +621,11 @@
     
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>stack = []var A1 = new DataflowConstraintVariable(2, "", true, [])var B1 = new DataflowConstraintVariable(3, "", true, [])var variable = new DataflowConstraintVariable(0, "=A1 + B1", false, [])console.log(variable.get()) // 5console.log(A1.dependencies) // [variable]console.log(B1.dependencies) // [variable]console.log(variable.dependencies) // []</code></pre>
 
 
 
@@ -437,7 +695,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">The variable to invalidate.</td>
         </tr>
 
     
@@ -478,7 +736,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="constraint-variable.1.0.0.js.html">constraint-variable.1.0.0.js</a>, <a href="constraint-variable.1.0.0.js.html#line32">line 32</a>
+        <a href="constraint-variable.1.0.0.js.html">constraint-variable.1.0.0.js</a>, <a href="constraint-variable.1.0.0.js.html#line41">line 41</a>
     </li></ul></dd>
     
 
@@ -506,6 +764,10 @@
 <h5>Returns:</h5>
 
         
+<div class="param-desc">
+    Nothing is returned from this method.
+</div>
+
 
 
 <dl>
@@ -589,7 +851,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="constraint-variable.1.0.0.js.html">constraint-variable.1.0.0.js</a>, <a href="constraint-variable.1.0.0.js.html#line91">line 91</a>
+        <a href="constraint-variable.1.0.0.js.html">constraint-variable.1.0.0.js</a>, <a href="constraint-variable.1.0.0.js.html#line115">line 115</a>
     </li></ul></dd>
     
 
@@ -617,6 +879,10 @@
 <h5>Returns:</h5>
 
         
+<div class="param-desc">
+    A function performing the operation specified by the equation.
+</div>
+
 
 
 <dl>
@@ -634,6 +900,11 @@
     
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>var A1 = new DataflowConstraintVariable(2, "", true, [])var B1 = new DataflowConstraintVariable(3, "", true, [])var variable = new DataflowConstraintVariable(0, "=A1 + B1", true, [])console.log(variable.parse_equation()) // ƒ () { return 2+3; }</code></pre>
 
 
 
@@ -706,7 +977,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">A number or equation to set the variable to.</td>
         </tr>
 
     
@@ -747,7 +1018,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="constraint-variable.1.0.0.js.html">constraint-variable.1.0.0.js</a>, <a href="constraint-variable.1.0.0.js.html#line62">line 62</a>
+        <a href="constraint-variable.1.0.0.js.html">constraint-variable.1.0.0.js</a>, <a href="constraint-variable.1.0.0.js.html#line72">line 72</a>
     </li></ul></dd>
     
 
@@ -775,6 +1046,10 @@
 <h5>Returns:</h5>
 
         
+<div class="param-desc">
+    Nothing is returned from this method.
+</div>
+
 
 
 <dl>
@@ -811,13 +1086,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DataflowConstraintVariable.html">DataflowConstraintVariable</a></li></ul><h3>Global</h3><ul><li><a href="global.html#stack">stack</a></li><li><a href="global.html#variables">variables</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DataflowConstraintVariable.html">DataflowConstraintVariable</a></li></ul><h3>Global</h3><ul><li><a href="global.html#enteringFormula">enteringFormula</a></li><li><a href="global.html#initializeInitializesaconstraintvariableforeachcellinthespreadsheet.Addseventlistenerstoallcellsforfocus,blur,click,keyup,keydowm,andinput">initializeInitializes a constraint variable for each cell in the spreadsheet. Adds event listeners to all cells for focus, blur, click, keyup, keydowm, and input</a></li><li><a href="global.html#nextCellDownReturnsthecellIDofthecellbelowthecurrentcell">nextCellDownReturns the cell ID of the cell below the current cell</a></li><li><a href="global.html#nextCellLeftReturnsthecellIDofthecelltotheleftofthecurrentcell">nextCellLeftReturns the cell ID of the cell to the left of the current cell</a></li><li><a href="global.html#nextCellUpReturnsthecellIDofthecellabovethecurrentcell">nextCellUpReturns the cell ID of the cell above the current cell</a></li><li><a href="global.html#nextCelRightReturnsthecellIDofthecelltoptherightofthecurrentcell">nextCelRightReturns the cell ID of the cell top the right of the current cell</a></li><li><a href="global.html#reloadCellsGetsthevalueofeach%2522userSet%2522cellandupdatesthecell'svaluevisually">reloadCellsGets the value of each "userSet" cell and updates the cell's value visually</a></li><li><a href="global.html#stack">stack</a></li><li><a href="global.html#targetCell">targetCell</a></li><li><a href="global.html#variables">variables</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Mon Dec 13 2021 01:40:05 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Mon Dec 13 2021 12:55:42 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

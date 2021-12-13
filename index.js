@@ -1,8 +1,20 @@
+/**
+ * Global variable for determining if a user is entering a formula into a cell
+ * @type {boolean}
+ */
 var enteringFormula = false
+
+/**
+ * Global variable for switching back to original cell when clicking on another cell while entering a formula
+ * @type {opject}
+ */
 var targetCell = null
 
 
-
+/**
+ * @function initialize
+ * Initializes a constraint variable for each cell in the spreadsheet. Adds event listeners to all cells for focus, blur, click, keyup, keydowm, and input
+ */
 function initialize() {
 
 
@@ -31,6 +43,7 @@ function initialize() {
       if (this.value.charAt(0) == '=') {
         enteringFormula = true
         targetCell = this
+        console.log(typeof(targetCell))
       } else {
         enteringFormula = false
         targetCell = null
@@ -68,9 +81,7 @@ function initialize() {
         if (isNaN(equation_input.value)) {
           highlightFormulaCells(equation_input.value)
         }
-
         boldColumnAndRowHeaders(this.id)
-
       }
     })
 
@@ -130,13 +141,15 @@ function initialize() {
 }
 
 
+/**
+ * @function reloadCells
+ * Gets the value of each "userSet" cell and updates the cell's value visually
+ */
 function reloadCells() {
   inputs = document.getElementsByTagName('input')
   for (let i = 0; i < inputs.length; i++) {
     if (variables[inputs[i].id].userSet) {
-      console.log(inputs[i].id)
       inputs[i].value = variables[inputs[i].id].get()
-
     } else {
       // if the variable has not been set by a user, its value is technically 0, but we don't want to display that.
       inputs[i].value = ""
@@ -145,19 +158,42 @@ function reloadCells() {
 }
 
 
-// neighbor cellid calculations
+/**
+ * @function nextCellDown
+ * Returns the cell ID of the cell below the current cell
+ * @param currentCellID the current cell ID
+ * @returns {string} the cell ID of the cell below the current cell
+ */
 function nextCellDown(currentCellID) {
   return currentCellID.charAt(0) + (parseInt(currentCellID.substring(1)) + 1).toString()
 }
 
+/**
+ * @function nextCellUp
+ * Returns the cell ID of the cell above the current cell
+ * @param currentCellID the current cell ID
+ * @returns {string} the cell ID of the cell below the current cell
+ */
 function nextCellUp(currentCellID) {
   return currentCellID.charAt(0) + (parseInt(currentCellID.substring(1)) - 1).toString()
 }
 
+/**
+ * @function nextCelRight
+ * Returns the cell ID of the cell top the right of the current cell
+ * @param currentCellID the current cell ID
+ * @returns {string} the cell ID of the cell below the current cell
+ */
 function nextCellRight(currentCellID) {
   return String.fromCharCode(currentCellID.charCodeAt(0) + 1) + currentCellID.substring(1)
 }
 
+/**
+ * @function nextCellLeft
+ * Returns the cell ID of the cell to the left of the current cell
+ * @param currentCellID the current cell ID
+ * @returns {string} the cell ID of the cell below the current cell
+ */
 function nextCellLeft(currentCellID) {
   return String.fromCharCode(currentCellID.charCodeAt(0) - 1) + currentCellID.substring(1)
 }
