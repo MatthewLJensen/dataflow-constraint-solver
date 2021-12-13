@@ -1,6 +1,11 @@
 # dataflow-constraint-solver
  An application that will record dataflow constraints and maintain the value of an object based on its dependancies. This Constraint Solver API is specifically designed for a spreadsheet-type application.
 
+## How Does a Dataflow Constraint Work?
+### Get
+### Set
+### Evaluate
+
 ## Graphical Interface
 The spreadsheet closely models an excel spreadsheet. Each cell has an ID corresponding to its column and row. Currently, the spreadsheet size is hardcoded to have A->H columns and 1->8 rows. Giving is an 8X8 grid consisting of 64 cells. Upon an initial load, the spreedsheet looks like the following image.
 ![image](https://user-images.githubusercontent.com/20911606/145886120-62946531-975e-495f-b180-9d7432a89c3a.png)
@@ -21,7 +26,7 @@ Navigation between cells is similar to how navigation works within Excel.
 5. Go to step 2.
 
 See this process in the GIF below:
-TO BE ADDED.
+![entering_formula](https://user-images.githubusercontent.com/20911606/145894183-f3be1acc-f776-4419-bfd1-41b143798af0.gif)
 
 You can also manually enter a formula by typing the IDs of the cell you wish to include in the formula. 
 
@@ -29,10 +34,18 @@ In order to edit a formula later, focus a cell with a formula and press F2 in or
 
 ### FAQs
 1. How are self referential formulas handled? Self references are allowed. They update every time another cell is changed, which triggers the application to get all of the values for each of the cells.
-2. Are there checks for improper input?
-3. 
+2. Are there checks for improper input? Not currently. Please be sure to enter the formulas without spaces. This is automatically done when 
+3. Order of operations? Single operation formulas are all that are currently accepted. No order of operations required. This may be implemented later.
+
 
 ## Features
+###
+Formulas can handle any number of variables. Currently only accept an operator of the same type between each variable.
 ### QOL
 1. Column and Row headers are bolded based on the currently selected cell
 2. Focusing a cell with a formula highlights the cells on which it depends. This currently only goes back 1 level.
+3. Each cell has an innate value of 0. Zero is only displayed if a user has manually entered it.
+4. Deleting the value in a cell that is depended on will innately use 0 as its value. This is how excel handles this situation.
+### Future Work
+1. Handle equations with multiple operators of different types
+
