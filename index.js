@@ -1,5 +1,4 @@
 var enteringFormula = false
-//var typing = false
 var targetCell = null
 
 
