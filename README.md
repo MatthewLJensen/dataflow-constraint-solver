@@ -1,5 +1,5 @@
-# dataflow-constraint-solver
- An application that will record dataflow constraints and maintain the value of an object based on its dependancies. This Constraint Solver API is specifically designed for a spreadsheet-type application.
+# Dataflow Constraint Spreadsheet
+An application that will record dataflow constraints and maintain the value of an object based on its dependancies. This Constraint Solver API is specifically designed for a spreadsheet-type application. [See it in action here](matthewljensen.com/dataflow-constraint-solver)
 
 ## How Does a Dataflow Constraint Work?
 A dataflow constraint system is made of of a number of variables. Each variable can either have an innate value or it can be based off of other values through equations.
